@@ -11,11 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TodoController extends Controller
 {
     /**
-     * @Route("/", name="todo")
+     * @Route("/", name="todo_list")
      */
     public function listAction()
     {
@@ -39,16 +40,45 @@ class TodoController extends Controller
             ->add('category', TextType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
             ->add('description', TextareaType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
             ->add('priority', ChoiceType::class,  array('choices' => array('Low' => 'Low','Normal'=>'Normal','High'=>'High'), 'attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('due_date', DateTimeType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
+            ->add('due_date', DateTimeType::class, array('attr' => array('class'=> 'formcontrol', 'style' =>'marigin-bottom:15px')))
+            ->add('save', SubmitType::class, array('label'=>'Create Todo', 'attr' => array('class'=> 'btn btn-primary', 'style' =>'marigin-bottom:15px')))
+
             ->getForm();
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isVaild())
+        if($form->isSubmitted() && $form->isValid())
         {
-            die('OK');
+            //Get Data
+            $name = $form['name']->getData();
+            $category = $form['category']->getData();
+            $description = $form['description']->getData();
+            $priority = $form['name']->getData();
+            $due_date = $form['due_date']->getData();
+
+            $now = new\DateTime('now');
+
+            $todo->setName($name);
+            $todo->setCategory($category);
+            $todo->setDescription($description);
+            $todo->setPriority($priority);
+            $todo->setDueDate($due_date);
+            $todo->setCreateDate($now);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($todo);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Todo Added'
+                );
+            return $this->redirectToRoute('todo_list');
         }           
-        return $this->render('todo/create.html.twig');
+        return $this->render('todo/create.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
      /**
      * @Route("/todo/edit/{id}", name="todo_edit")
