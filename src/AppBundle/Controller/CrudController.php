@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CrudController extends Controller
 {
     /**
-     * @Route("/crud", name="crud")
+     * @Route("/", name="crud")
      */
     public function listAction()
     {
