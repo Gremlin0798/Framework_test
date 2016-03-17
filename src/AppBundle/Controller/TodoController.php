@@ -2,15 +2,11 @@
 
 namespace AppBundle\Controller;
 
-<<<<<<< HEAD
 use AppBundle\Entity\Todo;
-=======
->>>>>>> 306e9f5b2272882b803997ee2fa501a62420808f
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-<<<<<<< HEAD
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -181,17 +177,4 @@ class TodoController extends Controller
             return $this->redirectToRoute('todo_list');
     }
 
-=======
-class TodoController extends Controller
-{
-    /**
-     * @Route("/index", name="index")
-     */
-    public function indexAction(Request $request)
-    {
-        //
-        // replace this example code with whatever you need
-        return $this->render('default/view.html.twig');
-    }
->>>>>>> 306e9f5b2272882b803997ee2fa501a62420808f
 }
