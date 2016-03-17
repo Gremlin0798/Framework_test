@@ -11,12 +11,8 @@ class CrudController extends Controller
     /**
      * @Route("/crud", name="crud")
      */
-    public function indexAction(Request $request)
+    public function listAction(Request $request)
     {
-        die('CRUD');
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ]);
+        return $this->render('crud/index.html.twig');
     }
 }
