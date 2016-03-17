@@ -1,7 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Łysy
- * Date: 2016-03-15
- * Time: 08:39
- */
+
+namespace AppBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
+class TodoController extends Controller
+{
+    /**
+     * @Route("/index", name="index")
+     */
+    public function indexAction(Request $request)
+    {
+        //
+        // replace this example code with whatever you need
+        return $this->render('default/view.html.twig');
+    }
+}
