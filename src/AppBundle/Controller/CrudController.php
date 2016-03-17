@@ -27,7 +27,7 @@ class CrudController extends Controller
      */
     public function editAction($id, Request $request)
     {
-        return $this->render('crud/index.html.twig');
+        return $this->render('crud/edit.html.twig');
     }
      /**
      * @Route("/crud/details/{id}", name="crud_details")
