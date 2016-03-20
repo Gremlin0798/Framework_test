@@ -29,10 +29,11 @@ class TodoController extends Controller
             ->findAll();
 
         return $this->render('todo/index.html.twig', array(
-                'todos' => $todos
-            ));
+            'todos' => $todos
+        ));
     }
-     /**
+
+    /**
      * @Route("/todo/create", name="todo_create")
      */
     public function createAction(Request $request)
@@ -40,19 +41,17 @@ class TodoController extends Controller
         $todo = new Todo;
 
         $form = $this->createFormBuilder($todo)
-            ->add('name', TextType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('category', TextType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('description', TextareaType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('priority', ChoiceType::class,  array('choices' => array('Low' => 'Low','Normal'=>'Normal','High'=>'High'), 'attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('due_date', DateTimeType::class, array('attr' => array('class'=> 'formcontrol', 'style' =>'marigin-bottom:15px')))
-            ->add('save', SubmitType::class, array('label'=>'Create Todo', 'attr' => array('class'=> 'btn btn-primary', 'style' =>'marigin-bottom:15px')))
-
+            ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('category', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('priority', ChoiceType::class, array('choices' => array('Low' => 'Low', 'Normal' => 'Normal', 'High' => 'High'), 'attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('due_date', DateTimeType::class, array('attr' => array('class' => 'formcontrol', 'style' => 'marigin-bottom:15px')))
+            ->add('save', SubmitType::class, array('label' => 'Create Todo', 'attr' => array('class' => 'btn btn-primary', 'style' => 'marigin-bottom:15px')))
             ->getForm();
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             //Get Data
             $name = $form['name']->getData();
             $category = $form['category']->getData();
@@ -77,14 +76,15 @@ class TodoController extends Controller
             $this->addFlash(
                 'notice',
                 'Todo Added'
-                );
+            );
             return $this->redirectToRoute('todo_list');
-        }           
+        }
         return $this->render('todo/create.html.twig', array(
             'form' => $form->createView()
         ));
     }
-     /**
+
+    /**
      * @Route("/todo/edit/{id}", name="todo_edit")
      */
     public function editAction($id, Request $request)
@@ -93,29 +93,27 @@ class TodoController extends Controller
             ->getRepository('AppBundle:Todo')
             ->find($id);
 
-            $now = new\DateTime('now');
+        $now = new\DateTime('now');
 
-            $todo->setName($todo->getName());
-            $todo->setCategory($todo->getCategory());
-            $todo->setDescription($todo->getDescription());
-            $todo->setPriority($todo->getPriority());
-            $todo->setDueDate($todo->getDueDate());
-            $todo->setCreateDate($now); 
+        $todo->setName($todo->getName());
+        $todo->setCategory($todo->getCategory());
+        $todo->setDescription($todo->getDescription());
+        $todo->setPriority($todo->getPriority());
+        $todo->setDueDate($todo->getDueDate());
+        $todo->setCreateDate($now);
 
         $form = $this->createFormBuilder($todo)
-            ->add('name', TextType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('category', TextType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('description', TextareaType::class, array('attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('priority', ChoiceType::class,  array('choices' => array('Low' => 'Low','Normal'=>'Normal','High'=>'High'), 'attr' => array('class'=> 'form-control', 'style' =>'marigin-bottom:15px')))
-            ->add('due_date', DateTimeType::class, array('attr' => array('class'=> 'formcontrol', 'style' =>'marigin-bottom:15px')))
-            ->add('save', SubmitType::class, array('label'=>'Update Todo', 'attr' => array('class'=> 'btn btn-primary', 'style' =>'marigin-bottom:15px')))
-
+            ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('category', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('priority', ChoiceType::class, array('choices' => array('Low' => 'Low', 'Normal' => 'Normal', 'High' => 'High'), 'attr' => array('class' => 'form-control', 'style' => 'marigin-bottom:15px')))
+            ->add('due_date', DateTimeType::class, array('attr' => array('class' => 'formcontrol', 'style' => 'marigin-bottom:15px')))
+            ->add('save', SubmitType::class, array('label' => 'Update Todo', 'attr' => array('class' => 'btn btn-primary', 'style' => 'marigin-bottom:15px')))
             ->getForm();
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             //Get Data
             $name = $form['name']->getData();
             $category = $form['category']->getData();
@@ -140,19 +138,20 @@ class TodoController extends Controller
             $this->addFlash(
                 'notice',
                 'Todo Edited and Updated'
-                );
+            );
             return $this->redirectToRoute('todo_list');
-        }           
+        }
 
         return $this->render('todo/edit.html.twig', array(
-                'todo' => $todo,
-                'form' => $form->createView()
-            ));
+            'todo' => $todo,
+            'form' => $form->createView()
+        ));
     }
-     /**
+
+    /**
      * @Route("/todo/details/{id}", name="todo_details")
      */
-    public function detailsAction ($id)
+    public function detailsAction($id)
     {
 
         $todo = $this->getDoctrine()
@@ -160,24 +159,34 @@ class TodoController extends Controller
             ->find($id);
 
         return $this->render('todo/details.html.twig', array(
-                'todo' => $todo,
-            ));
+            'todo' => $todo,
+        ));
     }
-         /**
+
+    /**
      * @Route("/todo/delete/{id}", name="todo_delete")
      */
-    public function deleteAction ($id)
+    public function deleteAction($id)
     {
-            $em = $this->getDoctrine()->getManager();
-            $todo = $em->getRepository('AppBundle:Todo')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $todo = $em->getRepository('AppBundle:Todo')->find($id);
 
-            $em->remove($todo);
-            $em->flush();
+        $em->remove($todo);
+        $em->flush();
 
-            $this->addFlash(
-                'notice',
-                'Todo Removed'
-                );
-            return $this->redirectToRoute('todo_list');
+        $this->addFlash(
+            'notice',
+            'Todo Removed'
+        );
+        return $this->redirectToRoute('todo_list');
+    }
+
+    /**
+     * @Route("/view", name="todo_view")
+     */
+    public function examplePage(Request $request)
+    {
+
+        return $this->render('default/view.html.twig');
     }
 }
